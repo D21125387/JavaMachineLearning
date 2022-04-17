@@ -12,6 +12,16 @@ public class DataHandler extends FileProcessor {
         super(fileName);
     }
 
+    @Override
+    public void open(){
+        if(!header.isEmpty()){
+            header.clear();
+            feature.clear();
+            data.clear();
+        }
+        super.open();
+    }
+
     public void transformData(){
         for(String i : read()){ // Read returns lines[]
             // converting comma separate String to array of String

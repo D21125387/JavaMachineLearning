@@ -27,7 +27,7 @@ public class TestUtils extends NaiveBayes {
     public void testFromPercentage(int percentage){
         int testSize = Math.round(getY()*percentage/100);
         System.out.println(testSize);
-        int testPerClassifier = testSize/getFeatureCategoryKey(getX()-1).size();
+        int testPerClassifier = Math.round(testSize/getFeatureCategoryKey(getX()-1).size());
         System.out.println(testPerClassifier);
         ArrayList<ArrayList<String>> testSet = new ArrayList<>();
         for(String key : getFeatureCategoryKey(getX()-1)){

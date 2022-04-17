@@ -97,7 +97,7 @@ public class GUI extends JFrame implements ActionListener {
         homePage.add(titleLabel);
         homePage.add(filler1);
 
-        fileLabel.setText("Trained Data Set: ");
+        fileLabel.setText("Trained Data Set: " + Control.ML.file);
         fileLabel.setAlignmentX(0.5F);
         homePage.add(fileLabel);
 
@@ -230,37 +230,56 @@ public class GUI extends JFrame implements ActionListener {
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel topPanel;
 
-    /**
-     * Event handling for the GUI
-     * @param e ActionEvent
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (startBtn.equals(e.getSource())) {
             goToPage(inputPage);
             settingsBtn.setVisible(false);
+            questionHandler();
         }
 
         if (settingsBtn.equals(e.getSource())){
             JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int returnValue = jfc.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = jfc.getSelectedFile();
+
+                System.out.println(selectedFile.getAbsolutePath());
+                Control.ML.setFileName(selectedFile.getAbsolutePath());
+                Control.ML.open();
+                Control.ML.transformData();
+                Control.ML.observeData();
+                fileLabel.setText("Trained Data Set: " + selectedFile.getName());
+                Control.MLTest.setFileName(selectedFile.getAbsolutePath());
+                Control.MLTest.open();
+                Control.MLTest.transformData();
+                Control.MLTest.observeData();
+                Control.MLTest.testFromPercentage(30);
 
                 goToPage(homePage);
             }
         }
 
         if (nextBtn.equals(e.getSource())){
+            if(nextBtn.getText().equals("Predict")){
+                // if no more questions
+                goToPage(resultPage);
+                questionCounter = 0;
+                nextBtn.setText("Next Question");
+                answers.add((String) answerComboBox.getSelectedItem());
+                System.out.println(answers);
+                resultHandler();
+                return;
+            }
 
+            answers.add((String) answerComboBox.getSelectedItem());
+            questionHandler();
+            System.out.println(answers);
         }
 
         if (doneBtn.equals(e.getSource())){
             goToPage(homePage);
             settingsBtn.setVisible(true);
-        }
-
-        if(answerComboBox.equals(e.getSource())){
-
         }
     }
 
@@ -269,5 +288,27 @@ public class GUI extends JFrame implements ActionListener {
         centerPanel.add(page);
         centerPanel.repaint();
         centerPanel.revalidate();
+    }
+
+    public void questionHandler(){
+        if(questionCounter == Control.ML.getX()-2){
+            nextBtn.setText("Predict");
+        }
+
+        questionNumberLabel.setText("Question #" + (questionCounter+1));
+        questionLabel.setText(Control.ML.feature.get(questionCounter));
+        List<String> combolist = new ArrayList<>();
+        for (int i = 0; i < Control.ML.getFeatureCategory(questionCounter).size(); i++) {
+            combolist.add(Control.ML.getFeatureCategoryKey(questionCounter).get(i));
+        }
+        Collections.sort(combolist);
+        answerComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(combolist.toArray(new String[0])));
+        questionCounter++;
+    }
+
+    public void resultHandler(){
+        resultLabel.setText("Result: " + Control.ML.applyEquation(answers));
+        questionCounter = 0;
+        answers.clear();
     }
 }
