@@ -21,7 +21,7 @@ public class NaiveBayes extends DataHandler {
     }
 
     public Double getClassifierProbability(String classifier){
-        double probability = 0.00;
+        double probability;
         int counter = 0;
         for(String key : getFeatureCategory(getX()-1).keySet()){
             counter += getFeatureCategory(getX()-1).get(key);
