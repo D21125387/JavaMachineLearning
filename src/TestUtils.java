@@ -48,7 +48,8 @@ public class TestUtils extends NaiveBayes {
             ArrayList<String> tester = new ArrayList<>(strings);
             tester.remove(getX() - 1);
             System.out.println(tester);
-            String result = applyEquation(tester);
+            // Change mode here
+            String result = applyEquationOpt(tester);
             System.out.println("Result: " + result);
             if (result.equals(strings.get(getX() - 1))) {
                 success++;

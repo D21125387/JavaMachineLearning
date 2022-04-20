@@ -307,7 +307,7 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     public void resultHandler(){
-        resultLabel.setText("Result: " + Control.ML.applyEquation(answers));
+        resultLabel.setText("Result: " + Control.ML.applyEquationOpt(answers));
         questionCounter = 0;
         answers.clear();
     }

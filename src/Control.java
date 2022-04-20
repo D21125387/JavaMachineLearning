@@ -17,6 +17,9 @@ public class Control {
         MLTest.transformData();
         MLTest.observeData();
         MLTest.testFromPercentage(30);
+//
+//        System.out.println(ML.applyEquation(new ArrayList<String>(Arrays.asList("Male", "No", "Yes", "Urban", "No"))));
+//        System.out.println(ML.applyEquationOpt(new ArrayList<String>(Arrays.asList("Male", "No", "Yes", "Urban", "No"))));
         GUI gui = new GUI("Naive Bayes Prediction");
     }
 }

@@ -81,4 +81,50 @@ public class NaiveBayes extends DataHandler {
 //        System.out.println(maxKey);
         return maxKey;
     }
+
+    public String applyEquationOpt(ArrayList<String> params){
+        HashMap<String, Double> result = new HashMap<>();
+        HashMap<String, Double> normalisation = new HashMap<>();
+        for (int i = 0; i < getFeatureCategoryKey(getX()-1).size(); i++) {
+            ArrayList<Double> probArray = new ArrayList<>();
+            String classifier = getFeatureCategoryKey(getX()-1).get(i);
+
+            for (int j = 0; j < params.size(); j++) {
+                String tableKey = j + "|" + params.get(j) + "|" + classifier;
+//                System.out.println(tableKey);
+//                System.out.println(observedData.get(tableKey));
+                double calcVal = (double) observedData.get(tableKey)/observedData.get(j + "|Total|" + classifier);
+                probArray.add(calcVal);
+//                System.out.println(calcVal);
+            }
+            probArray.add((double) observedData.get(getX()-1 + "|" + classifier + "|" + classifier)/(getY()+getFeatureCategoryKey(getX()-1).size()));
+//            System.out.println(probArray);
+            double rawProbability = 1;
+            for(double x : probArray){
+                rawProbability *= x;
+            }
+//            System.out.println(observedData.get(getX()-1 + "|" + classifier + "|" + classifier));
+            result.put(classifier, rawProbability);
+        }
+//        System.out.println(result);
+        double bottom = 0.00;
+        for(String key : result.keySet()){
+            bottom += result.get(key);
+        }
+//        System.out.println(bottom);
+        for(String key : result.keySet()){
+            normalisation.put(key, result.get(key)/bottom);
+        }
+        System.out.println("Normalisation Result: " + normalisation);
+
+        Double maxVal = Collections.max(normalisation.values());
+        String maxKey = "";
+        for(String key : result.keySet()){
+            if(Objects.equals(maxVal, normalisation.get(key))){
+                maxKey = key;
+            }
+        }
+//        System.out.println(maxKey);
+        return maxKey;
+    }
 }

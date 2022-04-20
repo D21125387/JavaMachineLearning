@@ -5,6 +5,7 @@ public class DataHandler extends FileProcessor {
     protected ArrayList<String> header = new ArrayList<>();
     protected ArrayList<String> feature = new ArrayList<>();
     protected ArrayList<ArrayList<String>> data = new ArrayList<>();
+    protected HashMap<String, Integer> observedData = new HashMap<>();
     protected int x,y = 0;
     protected int alpha = 1;
 
@@ -52,6 +53,7 @@ public class DataHandler extends FileProcessor {
                 int counter = 0;
                 for (int k = 0; k < getFeatureCategoryKey(getX()-1).size(); k++) {
                     System.out.print("Classifier: " + getFeatureCategoryKey(getX()-1).get(k) + " -> ");
+                    String tableEntry = i + "|" + getFeatureCategoryKey(i).get(j) + "|"+ getFeatureCategoryKey(getX() - 1).get(k);
                     System.out.println(getFrequency(i,
                             getFeatureCategoryKey(i).get(j),
                             getFeatureCategoryKey(getX()-1).get(k)
@@ -59,11 +61,35 @@ public class DataHandler extends FileProcessor {
                     counter += getFrequency(i,
                             getFeatureCategoryKey(i).get(j),
                             getFeatureCategoryKey(getX()-1).get(k));
+                    System.out.println(tableEntry);
+                    observedData.put(tableEntry, getFrequency(i,
+                                                getFeatureCategoryKey(i).get(j),
+                                                getFeatureCategoryKey(getX()-1).get(k)));
                 }
                 System.out.println(counter + "\n");
+                System.out.println(observedData);
             }
             System.out.println("<-- End -->\n");
         }
+
+        for (int i = 0; i < getFeatureCategoryKey(getX()-1).size(); i++) {
+            for (int j = 0; j < getX(); j++) {
+                String classifier = getFeatureCategoryKey(getX()-1).get(i);
+//                System.out.println(tableKey);
+//                System.out.println(observedData.get(tableKey));
+                int divider = 0;
+                for (int k = 0; k < getFeatureCategoryKey(j).size(); k++) {
+                    String tableKeyk = j + "|" + getFeatureCategoryKey(j).get(k) + "|" + classifier;
+//                    System.out.println(tableKeyk + " >>>>> " + observedData.get(tableKeyk));
+                    divider += observedData.get(tableKeyk);
+//                    System.out.println(observedData.get(tableKeyk));
+                }
+                observedData.put(j + "|Total|" + classifier, divider);
+//                System.out.println(">>>" + divider);
+//                System.out.println(observedData);
+            }
+        }
+
     }
 
     public HashMap<String, Integer> getFeatureCategory(int feature){
