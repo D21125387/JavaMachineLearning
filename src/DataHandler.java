@@ -19,6 +19,7 @@ public class DataHandler extends FileProcessor {
             header.clear();
             feature.clear();
             data.clear();
+            observedData.clear();
         }
         super.open();
     }

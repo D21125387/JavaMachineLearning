@@ -250,12 +250,7 @@ public class GUI extends JFrame implements ActionListener {
                 Control.ML.transformData();
                 Control.ML.observeData();
                 fileLabel.setText("Trained Data Set: " + selectedFile.getName());
-                Control.MLTest.setFileName(selectedFile.getAbsolutePath());
-                Control.MLTest.open();
-                Control.MLTest.transformData();
-                Control.MLTest.observeData();
-                Control.MLTest.testFromPercentage(30);
-
+                Control.ML.testFromPercentage(30);
                 goToPage(homePage);
             }
         }

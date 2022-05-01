@@ -105,8 +105,8 @@ public class NaiveBayes extends DataHandler {
             }
 //            System.out.println(observedData.get(getX()-1 + "|" + classifier + "|" + classifier));
             result.put(classifier, rawProbability);
+            System.out.println(probArray);
         }
-//        System.out.println(result);
         double bottom = 0.00;
         for(String key : result.keySet()){
             bottom += result.get(key);

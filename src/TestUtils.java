@@ -7,7 +7,7 @@ public class TestUtils extends NaiveBayes {
     }
 
     public void testFromLine(int num){
-        int success = 0,fail = 0;
+        int success = 1,fail = 1;
         for (int i = num; i < data.size(); i++) {
             ArrayList<String> tester = new ArrayList<>(data.get(i));
             tester.remove(getX()-1);
@@ -39,10 +39,16 @@ public class TestUtils extends NaiveBayes {
 
                 if(data.get(i).get(getX()-1).equals(key)){
                     testSet.add(data.get(i));
+                    // remove from train
+                    data.remove(data.get(i));
                     counter++;
                 }
             }
         }
+
+        System.out.println("Trimmed Data Size: " + data.size());
+
+
         int success = 0,fail = 0;
         for (ArrayList<String> strings : testSet) {
             ArrayList<String> tester = new ArrayList<>(strings);
