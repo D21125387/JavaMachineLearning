@@ -29,3 +29,9 @@ an entrepreneur. It utilises the Naive Bayes Classifier and is trained by a CSV 
 - Java Swing
 
 ## Video Demonstration
+https://user-images.githubusercontent.com/91070106/166146709-2429cc21-91a7-4774-855e-83d9bcc4c503.mov
+
+
+
+
+[![Youtube Video Demonstration](https://img.youtube.com/vi/1cWiAMVWWbI/0.jpg)](https://www.youtube.com/watch?v=1cWiAMVWWbI)
